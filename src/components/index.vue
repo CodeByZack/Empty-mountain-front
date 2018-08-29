@@ -9,6 +9,23 @@
           <div class="article_content" v-html="content">
           </div>
           <div class="button" @click='random'>随机一篇</div>
+          <div class="comments">
+            <span class="title">评论列表</span>
+            <div class="item">
+              <div><span class="name">匿名</span><span class="date">2018-8-21</span></div>
+              <p class="content">评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容</p>
+            </div>
+                        <div class="item">
+              <div><span class="name">匿名</span><span class="date">2018-8-21</span></div>
+              <p class="content">评论内容</p>
+            </div>
+                        <div class="item">
+              <div><span class="name">匿名</span><span class="date">2018-8-21</span></div>
+              <p class="content">评论内容</p>
+            </div>
+            <textarea></textarea>
+            <div class="button">评论</div>
+          </div>
         </div>
       </div>
     </div>
@@ -141,5 +158,46 @@ export default {
     padding: 5px 15px;
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
 }
-
+.comments{
+  width: 560px;
+  margin: 0 auto;
+}
+.comments .title{
+  display: inline-block;
+  margin: 40px 0px;
+  width: 100%;
+  text-align: center;
+  font-size: 17px;
+  font-weight: bold;
+}
+.comments .item{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom:1px solid #f2f2f2;
+}
+.comments .item .name{
+  font-size: 16px;
+  color: #808080;
+}
+.comments textarea{
+  width: 100%;
+  height: 80px;
+  margin-top: 30px;
+  border: 1px solid #CCCCCC;
+  border-radius: 3px 3px 3px 3px;
+  font-size: 16px;
+  padding: 8px;
+  resize: none;
+}
+.comments .item .date{
+  font-size: 14px;
+  float: right;
+  color: #e0e0e0;
+}
+.comments .item .content{
+    font-size: 16px;
+    line-height: 23px;
+    margin-top: 10px;
+    color: #000;
+}
 </style>
