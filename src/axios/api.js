@@ -32,6 +32,22 @@ BmobInstance.queryArticleToDay = function(){
     query.limit(1);
     return query.find();
 }
+
+BmobInstance.getComments = function(objectId){
+    const query = Bmob.Query("comments");
+    query.equalTo("articleId", "==", objectId);
+    return query.find();
+}
+
+BmobInstance.addComments = function(comment){
+    const query = Bmob.Query("comments");
+    query.set("content",comment.content);
+    const pointer = Bmob.Pointer('Articles');
+    const poiID = pointer.set(comment.objectId);
+    query.set("articleId",poiID);
+    return query.save();
+}
+
 BmobInstance.queryArticleByPage = function(page){
     const query = Bmob.Query("Articles");
     query.order("-updatedAt");

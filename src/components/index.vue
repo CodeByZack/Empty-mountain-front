@@ -8,25 +8,24 @@
           <div class="aricle_author">{{author}}</div>
           <div class="article_content" v-html="content">
           </div>
-          <div class="button" @click='random'>随机一篇</div>
-          <div class="button" @click='showComments'>展开评论</div>
-          <div class="comments" v-show="showComment">
-            <span class="title">评论列表</span>
-            <div class="item">
-              <div><span class="name">匿名</span><span class="date">2018-8-21</span></div>
-              <p class="content">评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容</p>
-            </div>
-                        <div class="item">
-              <div><span class="name">匿名</span><span class="date">2018-8-21</span></div>
-              <p class="content">评论内容</p>
-            </div>
-                        <div class="item">
-              <div><span class="name">匿名</span><span class="date">2018-8-21</span></div>
-              <p class="content">评论内容</p>
-            </div>
-            <textarea></textarea>
-            <div class="button">评论</div>
+          <div class="btns">
+            <div class="button" @click='random'>随机一篇</div>
+            <div class="button" @click='showComments'>{{showComment?"收起评论":"展开评论"}}</div>
           </div>
+          <transition name="fade">
+            <div class="comments" v-show="showComment">
+              <span class="title">评论列表</span>
+              <div class="item" v-for="(item, index) in comments" :key="index">
+                <div><span class="name">匿名</span><span class="date">{{item.createdAt}}</span></div>
+                <p class="content">{{item.content}}</p>
+              </div>
+              <textarea ref="input"></textarea>
+              <div class="wrapper" style="width:100%;text-align:center;">
+                <div class="button" @click="submit">评论</div>
+              </div>
+            </div>
+          </transition>
+          
         </div>
       </div>
     </div>
@@ -44,22 +43,52 @@ export default {
       author:'',
       content:'',
       imgurl:'',
-      showComment : false
+      showComment : false,
+      comments:[],
+      article:{}
     }
   },
   created(){
     Bmob.queryArticleToDay()
     .then(res => {
         this.updateArticle(res[0]);
-    }).catch(err => {
-        console.log(err)
+        return Bmob.getComments(res[0].objectId);
+    }).then(res=>{
+        this.comments = res;
     })
+    .catch(err => {
+        console.log(err)
+    });
   },
   methods:{
     random(){
       Bmob.randomArticle()
       .then(res=>{
         this.updateArticle(res[0]);
+        return Bmob.getComments(res[0].objectId);
+      })
+      .then(res=>{
+        this.comments = res;
+      })
+      .catch(err=>{
+        console.log(err);
+      })
+    },
+    submit(){
+      let value = this.$refs.input.value
+      if(value === ""){
+        alert('写点什么吧!');
+        return;
+      }
+      let comment = {};
+      comment.objectId = this.article.objectId;
+      comment.content = value;
+      Bmob.addComments(comment)
+      .then(res=>{
+        console.log(res);
+        this.comments.push({content:this.$refs.input.value,createdAt:res.createdAt});
+        alert('提交成功!');
+        this.$refs.input.value = '';
       })
       .catch(err=>{
         console.log(err);
@@ -69,6 +98,7 @@ export default {
       this.showComment = !this.showComment;
     },
     updateArticle(article){
+      this.article = article;
       this.title = article.title;
       this.author = article.author;
       this.imgurl = article.img;
@@ -145,10 +175,14 @@ export default {
     margin-bottom: 30px;
     text-align: justify;	
 }
-.container .article_show > .button{
-	margin: 0px auto;
-	margin-top: 80px;
-	text-align: center;
+
+.container .article_show .btns{
+  margin-top: 80px;
+  text-align: center;
+}
+
+.container .article_show .button{
+	display: inline-block;
 	width: 80px;
 	background-color: #FFB94B;
     background-image: -moz-linear-gradient(center top , #FDDB6F, #FFB94B);
@@ -195,6 +229,7 @@ export default {
   font-size: 16px;
   padding: 8px;
   resize: none;
+  box-sizing: border-box;
 }
 .comments .item .date{
   font-size: 14px;
@@ -206,5 +241,12 @@ export default {
     line-height: 23px;
     margin-top: 10px;
     color: #000;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>
