@@ -9,7 +9,8 @@
           <div class="article_content" v-html="content">
           </div>
           <div class="button" @click='random'>随机一篇</div>
-          <div class="comments">
+          <div class="button" @click='showComments'>展开评论</div>
+          <div class="comments" v-show="showComment">
             <span class="title">评论列表</span>
             <div class="item">
               <div><span class="name">匿名</span><span class="date">2018-8-21</span></div>
@@ -42,7 +43,8 @@ export default {
       title:'',
       author:'',
       content:'',
-      imgurl:''
+      imgurl:'',
+      showComment : false
     }
   },
   created(){
@@ -62,6 +64,9 @@ export default {
       .catch(err=>{
         console.log(err);
       })
+    },
+    showComments(){
+      this.showComment = !this.showComment;
     },
     updateArticle(article){
       this.title = article.title;
@@ -140,7 +145,7 @@ export default {
     margin-bottom: 30px;
     text-align: justify;	
 }
-.container .button{
+.container .article_show > .button{
 	margin: 0px auto;
 	margin-top: 80px;
 	text-align: center;
@@ -160,7 +165,9 @@ export default {
 }
 .comments{
   width: 560px;
-  margin: 0 auto;
+  margin: 50px auto;
+  transition: height 1s ease-in-out;
+  overflow: hidden;
 }
 .comments .title{
   display: inline-block;
