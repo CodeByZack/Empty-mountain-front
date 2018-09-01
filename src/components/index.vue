@@ -143,11 +143,11 @@ export default {
 	width: 950px;
 	margin: 0px auto;
 	background: #fff;
+  box-sizing: border-box;
 	border-radius: 5px;
 }
 .container .article_show{
 	padding: 80px 50px;
-	width: 848px;
 	border: 1px dashed #dddddd;
 
 }
