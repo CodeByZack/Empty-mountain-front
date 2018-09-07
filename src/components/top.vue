@@ -3,9 +3,9 @@
     <div class="header">
         <span class="logo">行者空山</span>
         <ul>
-            <a href="/"><li class="current">文章</li></a>
-            <a href="/voicelist"><li>声音</li></a>
-            <li>关于我</li>
+			<router-link to="/"><li :class="{current:$route.name == 'index' }">文章</li></router-link>
+			<router-link to="/voicelist"><li :class="{current:$route.name == 'voicelist' }">声音</li></router-link>
+			<router-link to="/about"><li :class="{current:$route.name == 'about' }">关于</li></router-link>
         </ul>
     </div>
   </div>
