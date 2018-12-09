@@ -1,5 +1,5 @@
 <template>
-    <div class="play-wrapper">
+    <div  v-bind:style="{ backgroundImage: 'url('+item.imgurl+')'}" class="play-wrapper">
         <div class="play-box">
             <h1>{{item.title}}</h1>
             <h2>{{item.author}}</h2>
@@ -29,8 +29,7 @@ export default {
 <style lang="less" scoped>
 
 .play-wrapper{
-    min-height: 900px;
-    background-image: url("http://voice.meiriyiwen.com/upload_imgs/339_img.jpg");    
+    min-height: 900px;   
     background-repeat: no-repeat;
     background-size: cover;
     position: relative;
