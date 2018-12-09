@@ -59,6 +59,13 @@ export default {
     .catch(err => {
         console.log(err)
     });
+    Bmob.randomBg()
+    .then(res => {
+      this.imgurl = res[0].imgurl;
+    })
+    .catch(err => {
+        console.log(err)
+    });
   },
   methods:{
     random(){
@@ -73,6 +80,13 @@ export default {
       .catch(err=>{
         console.log(err);
       })
+      Bmob.randomBg()
+      .then(res => {
+        this.imgurl = res[0].imgurl;
+      })
+      .catch(err => {
+          console.log(err)
+      });
     },
     submit(){
       let value = this.$refs.input.value
@@ -101,7 +115,6 @@ export default {
       this.article = article;
       this.title = article.title;
       this.author = article.author;
-      this.imgurl = article.img;
       let temp = article.content;
       temp = temp.replace(/\n/g,'</p><p>');
       temp = '<p>'+temp+'</p>';

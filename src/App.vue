@@ -2,8 +2,11 @@
   <div id="app">
     <Top></Top>
     <keep-alive>
-    <router-view></router-view>    
+    <router-view  v-if="$route.meta.keepAlive"></router-view>    
     </keep-alive>
+
+    <router-view  v-if="!$route.meta.keepAlive"></router-view>    
+    
     <Bottom></Bottom>
   </div>
 </template>

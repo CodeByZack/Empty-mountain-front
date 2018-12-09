@@ -26,6 +26,19 @@ BmobInstance.randomArticle = function(){
     });
 }
 
+
+BmobInstance.randomBg = function(){
+    return BmobInstance.countImgs()
+    .then(res=>{
+        let Rand = Math.random();
+        let num = Math.floor(Rand * res); //舍去
+        const query = Bmob.Query("Imgs");
+        query.skip(num);
+        query.limit(1);
+        return query.find();
+    });
+}
+
 BmobInstance.queryArticleToDay = function(){
     const query = Bmob.Query("Articles");
     query.order("-updatedAt");
@@ -59,6 +72,10 @@ BmobInstance.countArticles = function(){
     const query = Bmob.Query('Articles');
     return query.count();
 }
+BmobInstance.countImgs = function(){
+    const query = Bmob.Query('Imgs');
+    return query.count();
+}
 BmobInstance.addArticle = function(article){
     const query = Bmob.Query('Articles');
     query.set("title",article.title);
@@ -88,5 +105,22 @@ BmobInstance.saveFile = function(files){
         file = Bmob.File(item.name, item);
     }
     return file.save();
+}
+
+
+BmobInstance.queryVoiceByPage = function(page){
+
+}
+
+BmobInstance.queryVoiceByPage = function(page){
+    const query = Bmob.Query("Voices");
+    query.order("-updatedAt");
+    query.limit(9);
+    query.skip(9*(page-1));
+    return query.find();
+}
+BmobInstance.countVoices = function(){
+    const query = Bmob.Query('Voices');
+    return query.count();
 }
 export default BmobInstance;

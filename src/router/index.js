@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import index from '@/components/index'
-import voicelist from '@/components/voicelist'
-import about from '@/components/about'
+import index from '@/page/index'
+import voicelist from '@/page/voicelist'
+import voiceplay from '@/page/voiceplay'
+import about from '@/page/about'
 Vue.use(Router)
 
 export default new Router({
@@ -10,17 +11,31 @@ export default new Router({
     {
       path: '/',
       name: 'index',
-      component: index
+      component: index,
+      meta:{
+        keepAlive:true
+      }
     },
     {
       path:'/voicelist',
       name:'voicelist',
-      component:voicelist
+      component:voicelist,
+      meta:{
+        keepAlive:true
+      }
     },
     {
       path:'/about',
       name:'about',
-      component:about
+      component:about,
+      meta:{
+        keepAlive:true
+      }
+    },
+    {
+      path:'/voiceplay',
+      name:'voiceplay',
+      component:voiceplay
     }
   ]
 })
